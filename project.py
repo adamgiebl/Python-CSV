@@ -1,29 +1,24 @@
 import matplotlib.pyplot as plt
-import datetime as dt
 import pprint
 from fileparser import Parser
-
-
+from menu import askUser
+from utilities import filterByCity, getDateObject, getAverageFromList
 
 parser = Parser('data.csv')
 
-data = parser.getData(',', '\n')
+data = parser.getData(separator=',', lineSeparator='\n')
 
-print(data)
-
-
-downloadSpeeds = []
-dates = []
-months = []
+choice = int(askUser('menu.txt'))
 
 def getAverageSpeedPerMonth(city, data):
-
-    city = list(filter(lambda x: x['location'] == city, data)) 
+    downloadSpeeds = []
+    dates = []
+    months = []
+    city = filterByCity(city, data)
     somethings = {}
-
     for dict in city:
         tempList = []
-        month = dt.datetime.strptime(dict['date'], '%Y-%m-%d').month
+        month = getDateObject(dict['date']).month
         if month in somethings:
             somethings[month].append(float(dict['download']))
         else:
@@ -34,34 +29,56 @@ def getAverageSpeedPerMonth(city, data):
         dates.append(dict['date'])
 
     for item in dates:
-        months.append(dt.datetime.strptime(item, '%Y-%m-%d').month)
-
-    months.sort()
+        months.append(getDateObject(item).month)
 
     avgDict = {}
-    for k,v in somethings.items():
-        print(v);
-        # v is the list of grades for student k
-        avgDict[int(k)] = sum(v) / len(v)
+    for k, v in somethings.items():
+        avgDict[int(k)] = getAverageFromList(v)
+
+    lists = sorted(avgDict.items())
+    x, y = zip(*lists)
+    return {'x': x, 'y': y}
 
 
+def getAvgSpeedInMonth(selectedMonth, data):
+    downloadSpeeds = []
+    dates = []
+    months = []
+    somethings = {}
 
+    for dict in data:
+        tempList = []
+        month = getDateObject(dict['date']).strftime("%B")
+        if month in somethings:
+            somethings[month].append(float(dict['download']))
+        else:
+            tempList.append(float(dict['download']))
+            somethings[month] = tempList
 
-    lists = sorted(avgDict.items()) 
-    x, y = zip(*lists) 
-    return {'x': x, 'y': y}    
+    avgSpeed = getAverageFromList(somethings[selectedMonth])
+    return avgSpeed
 
+if choice == 2:
+    cityData = filterByCity('Fanø', data)
+    augustAvg = getAvgSpeedInMonth('August', cityData)
+    septemberAvg = getAvgSpeedInMonth('September', cityData)
+    print(f'Average download speed for the months of August and September in Fanø is {(augustAvg + septemberAvg) / 2}')
+elif choice == 3:
+    dick = getAverageSpeedPerMonth('Ballerup', data)
+    dick2 = getAverageSpeedPerMonth('Copenhagen', data)
+    plt.plot(dick['x'], dick['y'], 'r', label="Bellerup")
+    plt.plot(dick2['x'], dick2['y'], 'b', label="Copenhagen")
+    plt.xticks(range(len(list(dick['x']))+1))
+    plt.xlabel("Months")
+    plt.ylabel("Avg. Download speed")
+    plt.legend(loc='best')
+    plt.show()
+elif choice == 4:
+    dick = getAverageSpeedPerMonth('Lolland', data)
+    plt.bar(dick['x'], dick['y'], label="Bellerup")
+    plt.xticks(range(len(list(dick['x']))+1))
+    plt.xlabel("Months")
+    plt.ylabel("Avg. Download speed")
+    plt.legend(loc='best')
+    plt.show()
 
-
-dick = getAverageSpeedPerMonth('Ballerup', data)
-dick2 = getAverageSpeedPerMonth('Copenhagen', data)
-
-
-
-plt.plot(dick['x'], dick['y'], 'r', label="Bellerup")
-plt.plot(dick2['x'], dick2['y'], 'b', label="Copenhagen")
-plt.legend(loc='best')
-plt.xticks(range(len(list(dick.keys()))))
-plt.xlabel("Months")
-plt.ylabel("Avg. Download speed")
-plt.show()

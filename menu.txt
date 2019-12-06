@@ -1,0 +1,7 @@
+| —MENU—
+| Enter a number to select the function you want to perform:
+| 1. Parse the CSV file.
+| 2. Print average download speed for Fanø in August and September.
+| 3. Plot monthly average download speed for Copenhagen and Ballerup.
+| 4. Create a bar plot of the upload speed per date for Lolland Commune
+| Press Q to quit

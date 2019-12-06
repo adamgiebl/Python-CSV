@@ -1,8 +1,3 @@
-
-
-
-
-
 class Parser:
    def __init__(self, path):
         self.path = path
@@ -10,7 +5,7 @@ class Parser:
         self.data = []
 
    def getData(self, separator, lineSeparator):
-        file = open(self.path)
+        file = open(self.path, encoding='utf8')
         txt = file.read()
 
         #split data into lines
