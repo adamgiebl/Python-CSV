@@ -1,14 +1,15 @@
 import matplotlib.pyplot as plt
 import pprint
+from termcolor import colored
 from fileparser import Parser
 from menu import askUser
 from utilities import filterByCity, getDateObject, getAverageFromList
 
-parser = Parser('data.csv')
+parser = Parser('data.csv', 'utf8')
 
 data = parser.getData(separator=',', lineSeparator='\n')
 
-choice = int(askUser('menu.txt'))
+choice = askUser('menu.txt')
 
 def getAverageSpeedPerMonth(city, data):
     downloadSpeeds = []
@@ -58,27 +59,33 @@ def getAvgSpeedInMonth(selectedMonth, data):
     avgSpeed = getAverageFromList(somethings[selectedMonth])
     return avgSpeed
 
-if choice == 2:
-    cityData = filterByCity('Fanø', data)
-    augustAvg = getAvgSpeedInMonth('August', cityData)
-    septemberAvg = getAvgSpeedInMonth('September', cityData)
-    print(f'Average download speed for the months of August and September in Fanø is {(augustAvg + septemberAvg) / 2}')
-elif choice == 3:
-    dick = getAverageSpeedPerMonth('Ballerup', data)
-    dick2 = getAverageSpeedPerMonth('Copenhagen', data)
-    plt.plot(dick['x'], dick['y'], 'r', label="Bellerup")
-    plt.plot(dick2['x'], dick2['y'], 'b', label="Copenhagen")
-    plt.xticks(range(len(list(dick['x']))+1))
-    plt.xlabel("Months")
-    plt.ylabel("Avg. Download speed")
-    plt.legend(loc='best')
-    plt.show()
-elif choice == 4:
-    dick = getAverageSpeedPerMonth('Lolland', data)
-    plt.bar(dick['x'], dick['y'], label="Bellerup")
-    plt.xticks(range(len(list(dick['x']))+1))
-    plt.xlabel("Months")
-    plt.ylabel("Avg. Download speed")
-    plt.legend(loc='best')
-    plt.show()
+
+while choice != 'q':
+    if choice == 1:
+        print(colored('CSV successfully parsed', 'green'))
+    elif choice == 2:
+        cityData = filterByCity('Fanø', data)
+        augustAvg = getAvgSpeedInMonth('August', cityData)
+        septemberAvg = getAvgSpeedInMonth('September', cityData)
+        print('Average download speed for the months of August and September in Fanø is:')
+        print(colored((augustAvg + septemberAvg) / 2, 'green'))
+    elif choice == 3:
+        dick = getAverageSpeedPerMonth('Ballerup', data)
+        dick2 = getAverageSpeedPerMonth('Copenhagen', data)
+        plt.plot(dick['x'], dick['y'], 'r', label="Bellerup")
+        plt.plot(dick2['x'], dick2['y'], 'b', label="Copenhagen")
+        plt.xticks(range(len(list(dick['x']))+1))
+        plt.xlabel("Months")
+        plt.ylabel("Avg. Download speed")
+        plt.legend(loc='best')
+        plt.show()
+    elif choice == 4:
+        dick = getAverageSpeedPerMonth('Lolland', data)
+        plt.bar(dick['x'], dick['y'], label="Bellerup")
+        plt.xticks(range(len(list(dick['x']))+1))
+        plt.xlabel("Months")
+        plt.ylabel("Avg. Download speed")
+        plt.legend(loc='best')
+        plt.show()
+    choice = askUser('menu.txt')
 

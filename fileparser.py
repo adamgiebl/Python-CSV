@@ -1,11 +1,12 @@
 class Parser:
-   def __init__(self, path):
+   def __init__(self, path, encoding):
         self.path = path
+        self.encoding = encoding
         self.headers = []
         self.data = []
 
    def getData(self, separator, lineSeparator):
-        file = open(self.path, encoding='utf8')
+        file = open(self.path, encoding=self.encoding)
         txt = file.read()
 
         #split data into lines
