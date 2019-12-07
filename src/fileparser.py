@@ -1,4 +1,5 @@
 class Parser:
+   """The class's docstring"""
    def __init__(self, path, encoding):
         self.path = path
         self.encoding = encoding
@@ -6,6 +7,7 @@ class Parser:
         self.data = []
 
    def getData(self, separator, lineSeparator):
+        """The method's docstring"""
         file = open(self.path, encoding=self.encoding)
         txt = file.read()
 

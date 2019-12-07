@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import pprint
 from termcolor import colored
 from fileparser import Parser
 from menu import askUser
@@ -10,6 +9,7 @@ parser = Parser('data.csv', 'utf8')
 data = parser.getData(separator=',', lineSeparator='\n')
 
 choice = askUser('menu.txt')
+
 
 def getAverageSpeedPerMonth(city, data):
     downloadSpeeds = []
@@ -42,9 +42,6 @@ def getAverageSpeedPerMonth(city, data):
 
 
 def getAvgSpeedInMonth(selectedMonth, data):
-    downloadSpeeds = []
-    dates = []
-    months = []
     somethings = {}
 
     for dict in data:
@@ -88,4 +85,3 @@ while choice != 'q':
         plt.legend(loc='best')
         plt.show()
     choice = askUser('menu.txt')
-
