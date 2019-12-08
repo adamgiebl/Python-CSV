@@ -39,7 +39,7 @@ class Parser:
         with open(self.path, encoding=self.encoding) as file:
             txt = file.read()
 
-        time_read = time.process_time() - t
+        time_read = round(time.process_time() - t, 6)
 
         # split data into lines
         arr = txt.split(lineSeparator)
@@ -58,10 +58,10 @@ class Parser:
                 for i in range(len(self.headers)):
                     temp.append(split[i])
                 self.data.append(dict(zip(self.headers, temp)))
-        time_parse = time.process_time() - t
+        time_parse = round(time.process_time() - t, 5)
         print(colored('CSV successfully parsed', 'green'))
-        print(colored(f'Time to read: {time_read}s', 'blue'))
-        print(colored(f'Time to parse: {time_parse}s', 'blue'))
+        print(colored(f'Time to read: {time_read}s', 'white'))
+        print(colored(f'Time to parse: {time_parse}s', 'yellow'))
         return self.data
 
 
