@@ -4,4 +4,5 @@
 | 2. Print average download speed for Fanø in August and September.
 | 3. Plot monthly average download speed for Copenhagen and Ballerup.
 | 4. Create a bar plot of the upload speed per date for Lolland Commune
+| 5. Toggle dark mode
 | Press Q to quit
