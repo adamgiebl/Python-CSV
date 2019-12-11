@@ -1,96 +1,159 @@
 import matplotlib.pyplot as plt
 from termcolor import colored
+from os import path
 import datetime as dt
-from console_progressbar import ProgressBar
-from timeloop import Timeloop
-import time
+from time import process_time
+import csv
+from pprint import pprint as pp
 
-# -----CLASS FOR PARSING-----
-
-tl = Timeloop()
-progress = 0    
+"""-----CLASS FOR PARSING-----"""
 
 
 class Parser:
+    """This is a class for parsing and retrieving CSV data."""
 
-    def __init__(self, path, encoding='utf8'):
-        self.path = path
-        self.encoding = encoding
-        self.headers = []
-        self.data = []
-
-    def getData(self, separator, lineSeparator):
-        """The method's docstring"""
-        finished = False
-        t = time.process_time()
+    def __init__(self, encoding='utf8'):
         """
-        @tl.job(interval=dt.timedelta(seconds=0.01))
-        def sample_job_every_2s():
-            if not finished:
-                global progress
-                progress += 1
-                pb.print_progress_bar(progress)
-        
-        tl.start()
-        sample_job_every_2s()
-        time.sleep(0.1)"""
+        Args:
+            encoding (str, optional): Specify which encoding should be used in
+                reading the file.
+        """
+        self.encoding = encoding
 
-        txt = ""
-        with open(self.path, encoding=self.encoding) as file:
-            txt = file.read()
+    def get_path(self):
+        """Method that asks a user for a path and returns it.
 
-        time_read = round(time.process_time() - t, 6)
+        Provides simple validation if file doesn't exists or user has put in a 
+        file that is not a csv.
 
-        # split data into lines
-        arr = txt.split(lineSeparator)
+        Returns:
+            String if successful, None otherwise.
+        """
+        path_csv = input('Enter path to your csv file: ')
+        if path.exists(path_csv):
+            extension = path.splitext(path_csv)[1]
+            if extension == '.csv':
+                return path_csv
+            else:
+                print(colored('File is not a csv', 'red'))
+                return None
+        else:
+            print(colored('File doesn\'t exist', 'red'))
+            return None
 
-        # get headers from the first line
-        self.headers = arr[0].split(separator)
-        
-        # loop over remaining lines and put them into list of dictionaries
-        for line in arr[1:]:
-            split = line.split(separator)
+    def getData(self, separator):
+        """Method for reading csv contents and parsing it into a list of
+            dictionaries.
 
-            # continue parsing only if the data is correct
-            # (same number of items as headers)
-            if len(split) == len(self.headers):
-                temp = []
-                for i in range(len(self.headers)):
-                    temp.append(split[i])
-                self.data.append(dict(zip(self.headers, temp)))
-        time_parse = round(time.process_time() - t, 5)
-        print(colored('CSV successfully parsed', 'green'))
-        print(colored(f'Time to read: {time_read}s', 'white'))
-        print(colored(f'Time to parse: {time_parse}s', 'yellow'))
-        return self.data
+        Uses the csv module. Method can handle data with x amount of columns
+        and will automatically assign correct headers.
+
+        Args:
+            separator (str): Defines how are values separated in a csv file.
+
+        Returns:
+            List of ditionaries if successful, None otherwise.
+        """
+        path_csv = self.get_path()
+        if path_csv is None:
+            return
+
+        # start counting time elapsed
+        t = process_time()
+
+        data = []
+
+        with open(path_csv, encoding=self.encoding) as file:
+
+            reader = csv.reader(file, delimiter=separator)
+
+            # get headers from the first line
+            headers = next(reader)
+
+            # loop over remaining lines and put them into list of dictionaries
+            for line in reader:
+                # continue parsing only if the data is correct
+                # (same number of items as headers)
+                if len(line) == len(headers):
+                    values = []
+                    for i in range(len(headers)):
+                        values.append(line[i])
+                    # connecting values with headers and creating a dictionary
+                    data.append(dict(zip(headers, values)))
+
+        # getting result of time elapsed
+        time_elapsed = round(process_time() - t, 5)
+
+        pp(data)
+        print(colored('CSV successfully parsed with csv module', 'green'))
+        print(colored(f'Time to read and parse: {time_elapsed}s', 'white'))
+
+        return data
 
 
-# -----UTILITY FUNCTIONS-----
+"""-----UTILITY FUNCTIONS-----"""
+
+
+def check_data(func):
+    """Decorator function to check if the data exists before user tries to use functions that require it."""
+    def inner(*args, **kwargs):
+        # checking if first argument (data) is empty
+        if args[0]:
+            func(*args, **kwargs)
+        else:
+            print(colored("There is not data to work with.", 'red'))
+            print("Try parsing the file first.")
+            input("Click ENTER to continue...")
+    return inner
+
 
 def filterByCity(city, data):
+    """Filters data by city name.
+
+    Args:
+        city (str): City name.
+        data (list of dict): Data to be filtered.
+
+    Returns:
+        list: List of ditionaries.
+    """
     return list(filter(lambda x: x['location'] == city, data))
 
 
 def getDateObject(stringDate):
+    """Returns a date object from a string.
+
+    Args:
+        stringDate (str): Date in plain string.
+
+    Returns:
+        datetime: Object with useful methods for working with date.
+    """
     return dt.datetime.strptime(stringDate, '%Y-%m-%d')
 
 
 def getAverageFromList(list):
-    # calculate the average by dividing the sum of numbers by quantity
+    """Calculates the average from a list.
+
+    Args:
+        list (list): List of numbers.
+
+    Returns:
+        int: Average of a list.
+    """
+    # calculate the average by dividing the sum of numbers by quantity of numbers
     return sum(list) / len(list)
 
 
-def getSpeedsPerDate(data):
-    dates = []
-    speeds = []
-    for dict in data:
-        dates.append(dict['date'])
-        speeds.append(float(dict['download']))
-
-    return {'dates': dates, 'speeds': speeds}
-
-
 def askUser(path):
+    """Prints out a menu and asks for users input accordingly.
+
+    Args:
+        path (str): Path to the text file that defines the menu.
+
+    Returns:
+        String if input is text, Int if input is a number.
+    """
     file = open(path, encoding='utf8')
     txt = file.read()
     print(txt)
@@ -102,6 +165,18 @@ def askUser(path):
 
 
 def getAverageSpeedPerMonths(city, data):
+    """Calculates average speed per each month in a specified city.
+
+    Args:
+        city (str): City name.
+        data (list of dict): Data to be used.
+
+    Returns:
+        dict: {
+            'x': X axes,
+            'y': Y axes
+        }
+    """
     downloadSpeeds = []
     dates = []
     months = []
@@ -131,27 +206,37 @@ def getAverageSpeedPerMonths(city, data):
     return {'x': x, 'y': y}
 
 
-def getAvgSpeedPerMonth(selectedMonth, data):
-    somethings = {}
+def getSpeedsPerMonth(selected_month, data):
+    """Returns all the speeds for a selected month.
 
+    Args:
+        selected_month (str): Full month name.
+        data (list of dict): Data to be used.
+
+    Returns:
+        list: List of all speeds.
+    """
+    speeds = []
+
+    # parses a month name into a month number
+    month_number = dt.datetime.strptime(selected_month, '%B').month
     for dict in data:
-        tempList = []
-        month = getDateObject(dict['date']).strftime("%B")
-        if month in somethings:
-            somethings[month].append(float(dict['download']))
-        else:
-            tempList.append(float(dict['download']))
-            somethings[month] = tempList
+        # formats a date string into a month number
+        temp_month = getDateObject(dict['date']).strftime("%-m")
+        if (month_number == temp_month):
+            speeds.append(float(dict['download']))
 
-    avgSpeed = getAverageFromList(somethings[selectedMonth])
-    return avgSpeed
+    return speeds
 
 
 def getPlotConfig(label_x="x", label_y="y", ticks=10):
-    if darkMode:
-        plt.style.use('dark_background')
-    else:
-        plt.style.use('ggplot')
+    """Sets desired plot config.
+
+    Args:
+        label_x (str): Name of an x label.
+        label_y (str): Name of a y label.
+        ticks (int): Number of ticks.
+    """
     plt.tight_layout()
     plt.xlabel(label_x)
     plt.ylabel(label_y)
@@ -160,33 +245,47 @@ def getPlotConfig(label_x="x", label_y="y", ticks=10):
     plt.show()
 
 
-# -----EXECUTION-----
+def getPlotTheme():
+    """Returns a correct plot style accrording to the state of dark mode.
 
-pb = ProgressBar(total=10, prefix='Here', suffix='Now', decimals=1, length=10, fill='X', zfill='-')
+    Returns:
+        str: Plot style.
+    """
+    global darkMode
+    if darkMode:
+        return 'dark_background'
+    else:
+        return 'ggplot'
 
-parser = Parser('data.csv', 'utf8')
 
-data = []
+def parseData():
+    """Uses Parser class to parse data into a global variable."""
+    global data
+    data = parser.getData(separator=',')
+    input("Click ENTER to continue...")
 
-choice = askUser('menu.txt')
 
-darkMode = False
+@check_data
+def function2(data):
+    month1 = 'August'
+    month2 = 'September'
+    city = 'Fanø'
+    t = process_time()
+    cityData = filterByCity(city, data)
+    augustSpeeds = getSpeedsPerMonth(month1, cityData)
+    septemberSpeeds = getSpeedsPerMonth(month2, cityData)
+    time_elapsed = round(process_time() - t, 5)
+    print(time_elapsed)
+    print(f'Average download speed for {month1} and {month2} in {city} is:')
+    print(colored(getAverageFromList(augustSpeeds + septemberSpeeds), 'green'))
+    input("Click ENTER to continue...")
 
 
-while choice != 'q':
-    if choice == 1:
-        data = parser.getData(separator=',', lineSeparator='\n')
-        input("Click ENTER to continue...")
-    elif choice == 2:
-        cityData = filterByCity('Fanø', data)
-        augustAvg = getAvgSpeedPerMonth('August', cityData)
-        septemberAvg = getAvgSpeedPerMonth('September', cityData)
-        print('Average download speed for August and September in Fanø is:')
-        print(colored(getAverageFromList([augustAvg, septemberAvg]), 'green'))
-        input("Click ENTER to continue...")
-    elif choice == 3:
-        average_speed_ballerup = getAverageSpeedPerMonths('Ballerup', data)
-        average_speed_copenhagen = getAverageSpeedPerMonths('Copenhagen', data)
+@check_data
+def function3(data):
+    average_speed_ballerup = getAverageSpeedPerMonths('Ballerup', data)
+    average_speed_copenhagen = getAverageSpeedPerMonths('Copenhagen', data)
+    with plt.style.context(getPlotTheme()):
         plt.plot(
             average_speed_ballerup['x'],
             average_speed_ballerup['y'],
@@ -204,24 +303,63 @@ while choice != 'q':
             label_y="Avg. Download speed",
             ticks=range(len(list(average_speed_ballerup['x']))+1)
         )
-    elif choice == 4:
-        average_speed_lolland = getAverageSpeedPerMonths('Lolland', data)
+
+
+@check_data
+def function4(data):
+    city = 'Lolland'
+    average_speed = getAverageSpeedPerMonths(city, data)
+    with plt.style.context(getPlotTheme()):
         plt.bar(
-            average_speed_lolland['x'],
-            average_speed_lolland['y'],
-            label="Lolland"
+            average_speed['x'],
+            average_speed['y'],
+            label=city
         )
         getPlotConfig(
             label_x="Month",
             label_y="Avg. Download speed",
-            ticks=range(len(list(average_speed_lolland['x']))+1)
+            ticks=range(len(list(average_speed['x']))+1)
         )
+
+
+def toggleDarkMode():
+    """Toggles a dark mode state."""
+    global darkMode
+    darkMode ^= True
+    print("Dark mode is:", end=" ")
+    if darkMode:
+        print(colored("ON", "green"))
+        print("Open a graph to see the results.")
+    else:
+        print(colored("OFF", "red"))
+    input("Click ENTER to continue...")
+
+
+# -----EXECUTION-----
+
+
+parser = Parser('utf8')
+"""Parser: Instance of the Parser class."""
+
+data = []
+"""List: Used as a container for the parsed data."""
+
+choice = askUser('menu.txt')
+"""String: Getting and storing users input."""
+
+darkMode = False
+"""Boolean: Keeps track if DarkMode is ON or OFF"""
+
+# selecting a function based on a users choice
+while choice != 'q':
+    if choice == 1:
+        parseData()
+    elif choice == 2:
+        function2(data)
+    elif choice == 3:
+        function3(data)
+    elif choice == 4:
+        function4(data)
     elif choice == 5:
-        darkMode ^= True
-        print("Dark mode is: ", end=" ")
-        if darkMode:
-            print(colored("ON", "green"))
-        else:
-            print(colored("OFF", "red"))
-        input("Click ENTER to continue...")
+        toggleDarkMode()
     choice = askUser('menu.txt')
