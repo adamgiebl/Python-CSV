@@ -1,0 +1,1439 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <meta name="generator" content="pdoc 0.7.2" />
+    <title>project API documentation</title>
+    <meta name="description" content="" />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+    <style>
+        body,
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .flex {
+            display: flex !important
+        }
+        
+        body {
+            line-height: 1.5em
+        }
+        
+        #content {
+            padding: 20px
+        }
+        
+        #sidebar {
+            padding: 30px;
+            overflow: hidden
+        }
+        
+        .http-server-breadcrumbs {
+            font-size: 130%;
+            margin: 0 0 15px 0
+        }
+        
+        #footer {
+            font-size: .75em;
+            padding: 5px 30px;
+            border-top: 1px solid #ddd;
+            text-align: right
+        }
+        
+        #footer p {
+            margin: 0 0 0 1em;
+            display: inline-block
+        }
+        
+        #footer p:last-child {
+            margin-right: 30px
+        }
+        
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-weight: 300
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            line-height: 1.1em
+        }
+        
+        h2 {
+            font-size: 1.75em;
+            margin: 1em 0 .50em 0
+        }
+        
+        h3 {
+            font-size: 1.4em;
+            margin: 25px 0 10px 0
+        }
+        
+        h4 {
+            margin: 0;
+            font-size: 105%
+        }
+        
+        a {
+            color: #058;
+            text-decoration: none;
+            transition: color .3s ease-in-out
+        }
+        
+        a:hover {
+            color: #e82
+        }
+        
+        .title code {
+            font-weight: bold
+        }
+        
+        h2[id^="header-"] {
+            margin-top: 2em
+        }
+        
+        .ident {
+            color: #900
+        }
+        
+        pre code {
+            background: #f8f8f8;
+            font-size: .8em;
+            line-height: 1.4em
+        }
+        
+        code {
+            background: #f2f2f1;
+            padding: 1px 4px;
+            overflow-wrap: break-word
+        }
+        
+        h1 code {
+            background: transparent
+        }
+        
+        pre {
+            background: #f8f8f8;
+            border: 0;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            margin: 1em 0;
+            padding: 1ex
+        }
+        
+        #http-server-module-list {
+            display: flex;
+            flex-flow: column
+        }
+        
+        #http-server-module-list div {
+            display: flex
+        }
+        
+        #http-server-module-list dt {
+            min-width: 10%
+        }
+        
+        #http-server-module-list p {
+            margin-top: 0
+        }
+        
+        .toc ul,
+        #index {
+            list-style-type: none;
+            margin: 0;
+            padding: 0
+        }
+        
+        #index code {
+            background: transparent
+        }
+        
+        #index h3 {
+            border-bottom: 1px solid #ddd
+        }
+        
+        #index ul {
+            padding: 0
+        }
+        
+        #index h4 {
+            font-weight: bold
+        }
+        
+        #index h4+ul {
+            margin-bottom: .6em
+        }
+        
+        @media (min-width:200ex) {
+            #index .two-column {
+                column-count: 2
+            }
+        }
+        
+        @media (min-width:300ex) {
+            #index .two-column {
+                column-count: 3
+            }
+        }
+        
+        dl {
+            margin-bottom: 2em
+        }
+        
+        dl dl:last-child {
+            margin-bottom: 4em
+        }
+        
+        dd {
+            margin: 0 0 1em 3em
+        }
+        
+        #header-classes+dl>dd {
+            margin-bottom: 3em
+        }
+        
+        dd dd {
+            margin-left: 2em
+        }
+        
+        dd p {
+            margin: 10px 0
+        }
+        
+        .name {
+            background: #eee;
+            font-weight: bold;
+            font-size: .85em;
+            padding: 5px 10px;
+            display: inline-block;
+            min-width: 40%
+        }
+        
+        .name:hover {
+            background: #e0e0e0
+        }
+        
+        .name>span:first-child {
+            white-space: nowrap
+        }
+        
+        .name.class>span:nth-child(2) {
+            margin-left: .4em
+        }
+        
+        .inherited {
+            color: #999;
+            border-left: 5px solid #eee;
+            padding-left: 1em
+        }
+        
+        .inheritance em {
+            font-style: normal;
+            font-weight: bold
+        }
+        
+        .desc h2 {
+            font-weight: 400;
+            font-size: 1.25em
+        }
+        
+        .desc h3 {
+            font-size: 1em
+        }
+        
+        .desc dt code {
+            background: inherit
+        }
+        
+        .source summary,
+        .git-link-div {
+            color: #666;
+            text-align: right;
+            font-weight: 400;
+            font-size: .8em;
+            text-transform: uppercase
+        }
+        
+        .source summary>* {
+            white-space: nowrap;
+            cursor: pointer
+        }
+        
+        .git-link {
+            color: inherit;
+            margin-left: 1em
+        }
+        
+        .source pre {
+            max-height: 500px;
+            overflow: auto;
+            margin: 0
+        }
+        
+        .source pre code {
+            font-size: 12px;
+            overflow: visible
+        }
+        
+        .hlist {
+            list-style: none
+        }
+        
+        .hlist li {
+            display: inline
+        }
+        
+        .hlist li:after {
+            content: ',\2002'
+        }
+        
+        .hlist li:last-child:after {
+            content: none
+        }
+        
+        .hlist .hlist {
+            display: inline;
+            padding-left: 1em
+        }
+        
+        img {
+            max-width: 100%
+        }
+        
+        .admonition {
+            padding: .1em .5em;
+            margin-bottom: 1em
+        }
+        
+        .admonition-title {
+            font-weight: bold
+        }
+        
+        .admonition.note,
+        .admonition.info,
+        .admonition.important {
+            background: #aef
+        }
+        
+        .admonition.todo,
+        .admonition.versionadded,
+        .admonition.tip,
+        .admonition.hint {
+            background: #dfd
+        }
+        
+        .admonition.warning,
+        .admonition.versionchanged,
+        .admonition.deprecated {
+            background: #fd4
+        }
+        
+        .admonition.error,
+        .admonition.danger,
+        .admonition.caution {
+            background: lightpink
+        }
+    </style>
+    <style media="screen and (min-width: 700px)">
+        @media screen and (min-width:700px) {
+            #sidebar {
+                width: 30%
+            }
+            #content {
+                width: 70%;
+                max-width: 100ch;
+                padding: 3em 4em;
+                border-left: 1px solid #ddd
+            }
+            pre code {
+                font-size: 1em
+            }
+            .item .name {
+                font-size: 1em
+            }
+            main {
+                display: flex;
+                flex-direction: row-reverse;
+                justify-content: flex-end
+            }
+            .toc ul ul,
+            #index ul {
+                padding-left: 1.5em
+            }
+            .toc>ul>li {
+                margin-top: .5em
+            }
+        }
+    </style>
+    <style media="print">
+        @media print {
+            #sidebar h1 {
+                page-break-before: always
+            }
+            .source {
+                display: none
+            }
+        }
+        
+        @media print {
+            * {
+                background: transparent !important;
+                color: #000 !important;
+                box-shadow: none !important;
+                text-shadow: none !important
+            }
+            a[href]:after {
+                content: " (" attr(href) ")";
+                font-size: 90%
+            }
+            a[href][title]:after {
+                content: none
+            }
+            abbr[title]:after {
+                content: " (" attr(title) ")"
+            }
+            .ir a:after,
+            a[href^="javascript:"]:after,
+            a[href^="#"]:after {
+                content: ""
+            }
+            pre,
+            blockquote {
+                border: 1px solid #999;
+                page-break-inside: avoid
+            }
+            thead {
+                display: table-header-group
+            }
+            tr,
+            img {
+                page-break-inside: avoid
+            }
+            img {
+                max-width: 100% !important
+            }
+            @page {
+                margin: 0.5cm
+            }
+            p,
+            h2,
+            h3 {
+                orphans: 3;
+                widows: 3
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                page-break-after: avoid
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <article id="content">
+            <header>
+                <h1 class="title">Module <code>project</code></h1>
+            </header>
+            <section id="section-intro">
+                <details class="source">
+                    <summary>
+                        <span>Expand source code</span>
+                    </summary>
+                    <pre><code class="python">import matplotlib.pyplot as plt
+from termcolor import colored
+from os import path
+import datetime as dt
+from time import process_time
+import csv
+import colorama
+from pprint import pprint as pp
+
+&#34;&#34;&#34;-----CLASS FOR PARSING-----&#34;&#34;&#34;
+
+
+class Parser:
+    &#34;&#34;&#34;This is a class for parsing and retrieving CSV data.&#34;&#34;&#34;
+
+    def __init__(self, encoding=&#39;utf8&#39;):
+        &#34;&#34;&#34;
+        Args:
+            encoding (str, optional): Specify which encoding should be used in
+                reading the file.
+        &#34;&#34;&#34;
+        self.encoding = encoding
+
+    def get_path(self):
+        &#34;&#34;&#34;Method that asks a user for a path and returns it.
+
+        Provides simple validation if file doesn&#39;t exists or user has put in a 
+        file that is not a csv.
+
+        Returns:
+            String if successful, None otherwise.
+        &#34;&#34;&#34;
+        path_csv = input(&#39;Enter path to your csv file: &#39;)
+        if path.exists(path_csv):
+            extension = path.splitext(path_csv)[1]
+            if extension == &#39;.csv&#39;:
+                return path_csv
+            else:
+                print(colored(&#39;File is not a csv&#39;, &#39;red&#39;))
+                return None
+        else:
+            print(colored(&#39;File doesn\&#39;t exist&#39;, &#39;red&#39;))
+            return None
+
+    def getData(self, separator):
+        &#34;&#34;&#34;Method for reading csv contents and parsing it into a list of
+            dictionaries.
+
+        Uses the csv module. Method can handle data with x amount of columns
+        and will automatically assign correct headers.
+
+        Args:
+            separator (str): Defines how are values separated in a csv file.
+
+        Returns:
+            List of ditionaries if successful, None otherwise.
+        &#34;&#34;&#34;
+        path_csv = self.get_path()
+        if path_csv is None:
+            return
+
+        # start counting time elapsed
+        t = process_time()
+
+        data = []
+
+        with open(path_csv, encoding=self.encoding) as file:
+
+            reader = csv.reader(file, delimiter=separator)
+
+            # get headers from the first line
+            headers = next(reader)
+
+            # loop over remaining lines and put them into list of dictionaries
+            for line in reader:
+                # continue parsing only if the data is correct
+                # (same number of items as headers)
+                if len(line) == len(headers):
+                    values = []
+                    for i in range(len(headers)):
+                        values.append(line[i])
+                    # connecting values with headers and creating a dictionary
+                    data.append(dict(zip(headers, values)))
+
+        # getting result of time elapsed
+        time_elapsed = round(process_time() - t, 5)
+
+        print(colored(&#39;CSV successfully parsed with csv module&#39;, &#39;green&#39;))
+        print(colored(f&#39;Time to read and parse: {time_elapsed}s&#39;, &#39;white&#39;))
+
+        return data
+
+
+&#34;&#34;&#34;-----UTILITY FUNCTIONS-----&#34;&#34;&#34;
+
+
+def check_data(func):
+    &#34;&#34;&#34;Decorator function to check if the data exists before user tries to use functions that require it.&#34;&#34;&#34;
+    def inner(*args, **kwargs):
+        # checking if first argument (data) is empty
+        if args[0]:
+            func(*args, **kwargs)
+        else:
+            print(colored(&#34;There is not data to work with.&#34;, &#39;red&#39;))
+            print(&#34;Try parsing the file first.&#34;)
+            input(&#34;Click ENTER to continue...&#34;)
+    return inner
+
+
+def filterByCity(city, data):
+    &#34;&#34;&#34;Filters data by city name.
+
+    Args:
+        city (str): City name.
+        data (list of dict): Data to be filtered.
+
+    Returns:
+        list: List of ditionaries.
+    &#34;&#34;&#34;
+    return list(filter(lambda x: x[&#39;location&#39;] == city, data))
+
+
+def getDateObject(stringDate):
+    &#34;&#34;&#34;Returns a date object from a string.
+
+    Args:
+        stringDate (str): Date in plain string.
+
+    Returns:
+        datetime: Object with useful methods for working with date.
+    &#34;&#34;&#34;
+    return dt.datetime.strptime(stringDate, &#39;%Y-%m-%d&#39;)
+
+
+def getAverageFromList(list):
+    &#34;&#34;&#34;Calculates the average from a list.
+
+    Args:
+        list (list): List of numbers.
+
+    Returns:
+        int: Average of a list.
+    &#34;&#34;&#34;
+    # calculate the average by dividing the sum of numbers by quantity of numbers
+    return sum(list) / len(list)
+
+
+def askUser(path):
+    &#34;&#34;&#34;Prints out a menu and asks for users input accordingly.
+
+    Args:
+        path (str): Path to the text file that defines the menu.
+
+    Returns:
+        String if input is text, Int if input is a number.
+    &#34;&#34;&#34;
+    file = open(path, encoding=&#39;utf8&#39;)
+    txt = file.read()
+    print(txt)
+    res = input()
+    if res.isdigit():
+        return int(res)
+    else:
+        return res.lower()
+
+
+def getAverageSpeedPerMonths(city, data):
+    &#34;&#34;&#34;Calculates average speed per each month in a specified city.
+
+    Args:
+        city (str): City name.
+        data (list of dict): Data to be used.
+
+    Returns:
+        dict: {
+            &#39;x&#39;: list: Months,
+            &#39;y&#39;: list: Average speeds.
+        }
+    &#34;&#34;&#34;
+    downloadSpeeds = []
+    dates = []
+    months = []
+    city = filterByCity(city, data)
+    somethings = {}
+    for dict in city:
+        tempList = []
+        month = getDateObject(dict[&#39;date&#39;]).month
+        if month in somethings:
+            somethings[month].append(float(dict[&#39;download&#39;]))
+        else:
+            tempList.append(float(dict[&#39;download&#39;]))
+            somethings[month] = tempList
+
+        downloadSpeeds.append(float(dict[&#39;download&#39;]))
+        dates.append(dict[&#39;date&#39;])
+
+    for item in dates:
+        months.append(getDateObject(item).month)
+
+    avgDict = {}
+    for k, v in somethings.items():
+        avgDict[int(k)] = getAverageFromList(v)
+
+    lists = sorted(avgDict.items())
+    x, y = zip(*lists)
+    return {&#39;x&#39;: x, &#39;y&#39;: y}
+
+
+def getSpeedsPerMonth(selected_month, data):
+    &#34;&#34;&#34;Returns all the speeds for a selected month.
+
+    Args:
+        selected_month (str): Full month name.
+        data (list of dict): Data to be used.
+
+    Returns:
+        list: List of all speeds.
+    &#34;&#34;&#34;
+    speeds = []
+
+    # parses a month name into a month number
+    month_number = str(dt.datetime.strptime(selected_month, &#39;%B&#39;).month)
+    for dict in data:
+        # formats a date string into a month number
+        temp_month = getDateObject(dict[&#39;date&#39;]).strftime(&#34;%m&#34;).lstrip(&#39;0&#39;)
+        if month_number == temp_month:
+            speeds.append(float(dict[&#39;download&#39;]))
+
+    return speeds
+
+
+def getPlotConfig(label_x=&#34;x&#34;, label_y=&#34;y&#34;, ticks=10):
+    &#34;&#34;&#34;Sets desired plot config.
+
+    Args:
+        label_x (str): Name of an x label.
+        label_y (str): Name of a y label.
+        ticks (int): Number of ticks.
+    &#34;&#34;&#34;
+    plt.tight_layout()
+    plt.xlabel(label_x)
+    plt.ylabel(label_y)
+    plt.xticks(ticks)
+    plt.legend(loc=&#39;best&#39;)
+    plt.show()
+
+
+def getPlotTheme():
+    &#34;&#34;&#34;Returns a correct plot style accrording to the state of dark mode.
+
+    Returns:
+        str: Plot style.
+    &#34;&#34;&#34;
+    global darkMode
+    if darkMode:
+        return &#39;dark_background&#39;
+    else:
+        return &#39;ggplot&#39;
+
+
+def parseData():
+    &#34;&#34;&#34;Uses Parser class to parse data into a global variable.&#34;&#34;&#34;
+    global data
+    data = parser.getData(separator=&#39;,&#39;)
+    input(&#34;Click ENTER to continue...&#34;)
+
+def toggleDarkMode():
+    &#34;&#34;&#34;Toggles a dark mode state.&#34;&#34;&#34;
+    global darkMode
+    darkMode ^= True
+    print(&#34;Dark mode is:&#34;, end=&#34; &#34;)
+    if darkMode:
+        print(colored(&#34;ON&#34;, &#34;green&#34;))
+        print(&#34;Open a graph to see the results.&#34;)
+    else:
+        print(colored(&#34;OFF&#34;, &#34;red&#34;))
+    input(&#34;Click ENTER to continue...&#34;)
+
+
+# -----EXECUTION-----
+
+&#34;&#34;&#34;Makes colored terminal output work on Windows&#34;&#34;&#34;
+colorama.init()
+
+parser = Parser(&#39;utf8&#39;)
+&#34;&#34;&#34;Parser: Instance of the Parser class.&#34;&#34;&#34;
+
+data = []
+&#34;&#34;&#34;List: Used as a container for the parsed data.&#34;&#34;&#34;
+
+choice = askUser(&#39;menu.txt&#39;)
+&#34;&#34;&#34;String: Getting and storing users input.&#34;&#34;&#34;
+
+darkMode = False
+&#34;&#34;&#34;Boolean: Keeps track if DarkMode is ON or OFF&#34;&#34;&#34;</code></pre>
+                </details>
+            </section>
+            <section>
+            </section>
+            <section>
+                <h2 class="section-title" id="header-variables">Global variables</h2>
+                <dl>
+                    <dt id="project.choice"><code class="name">var <span class="ident">choice</span></code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>String: Getting and storing users input.</p>
+                        </section>
+                    </dd>
+                    <dt id="project.darkMode"><code class="name">var <span class="ident">darkMode</span></code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Boolean: Keeps track if DarkMode is ON or OFF</p>
+                        </section>
+                    </dd>
+                    <dt id="project.data"><code class="name">var <span class="ident">data</span></code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>List: Used as a container for the parsed data.</p>
+                        </section>
+                    </dd>
+                    <dt id="project.parser"><code class="name">var <span class="ident">parser</span></code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Parser: Instance of the Parser class.</p>
+                        </section>
+                    </dd>
+                </dl>
+            </section>
+            <section>
+                <h2 class="section-title" id="header-functions">Functions</h2>
+                <dl>
+                    <dt id="project.askUser"><code class="name flex">
+<span>def <span class="ident">askUser</span></span>(<span>path)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Prints out a menu and asks for users input accordingly.</p>
+                            <h2 id="args">Args</h2>
+                            <dl>
+                                <dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
+                                <dd>Path to the text file that defines the menu.</dd>
+                            </dl>
+                            <h2 id="returns">Returns</h2>
+                            <p>String if input is text, Int if input is a number.</p>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def askUser(path):
+    &#34;&#34;&#34;Prints out a menu and asks for users input accordingly.
+
+    Args:
+        path (str): Path to the text file that defines the menu.
+
+    Returns:
+        String if input is text, Int if input is a number.
+    &#34;&#34;&#34;
+    file = open(path, encoding=&#39;utf8&#39;)
+    txt = file.read()
+    print(txt)
+    res = input()
+    if res.isdigit():
+        return int(res)
+    else:
+        return res.lower()</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.check_data"><code class="name flex">
+<span>def <span class="ident">check_data</span></span>(<span>func)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Decorator function to check if the data exists before user tries to use functions that require it.</p>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def check_data(func):
+    &#34;&#34;&#34;Decorator function to check if the data exists before user tries to use functions that require it.&#34;&#34;&#34;
+    def inner(*args, **kwargs):
+        # checking if first argument (data) is empty
+        if args[0]:
+            func(*args, **kwargs)
+        else:
+            print(colored(&#34;There is not data to work with.&#34;, &#39;red&#39;))
+            print(&#34;Try parsing the file first.&#34;)
+            input(&#34;Click ENTER to continue...&#34;)
+    return inner</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.filterByCity"><code class="name flex">
+<span>def <span class="ident">filterByCity</span></span>(<span>city, data)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Filters data by city name.</p>
+                            <h2 id="args">Args</h2>
+                            <dl>
+                                <dt><strong><code>city</code></strong> :&ensp;<code>str</code></dt>
+                                <dd>City name.</dd>
+                                <dt><strong><a title="project.data" href="#project.data"><code>data</code></a></strong> :&ensp;<code>list</code> of <code>dict</code></dt>
+                                <dd>Data to be filtered.</dd>
+                            </dl>
+                            <h2 id="returns">Returns</h2>
+                            <dl>
+                                <dt><strong><code>list</code></strong></dt>
+                                <dd>List of ditionaries.</dd>
+                            </dl>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def filterByCity(city, data):
+    &#34;&#34;&#34;Filters data by city name.
+
+    Args:
+        city (str): City name.
+        data (list of dict): Data to be filtered.
+
+    Returns:
+        list: List of ditionaries.
+    &#34;&#34;&#34;
+    return list(filter(lambda x: x[&#39;location&#39;] == city, data))</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.getAverageFromList"><code class="name flex">
+<span>def <span class="ident">getAverageFromList</span></span>(<span>list)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Calculates the average from a list.</p>
+                            <h2 id="args">Args</h2>
+                            <dl>
+                                <dt><strong><code>list</code></strong> :&ensp;<code>list</code></dt>
+                                <dd>List of numbers.</dd>
+                            </dl>
+                            <h2 id="returns">Returns</h2>
+                            <dl>
+                                <dt><strong><code>int</code></strong></dt>
+                                <dd>Average of a list.</dd>
+                            </dl>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def getAverageFromList(list):
+    &#34;&#34;&#34;Calculates the average from a list.
+
+    Args:
+        list (list): List of numbers.
+
+    Returns:
+        int: Average of a list.
+    &#34;&#34;&#34;
+    # calculate the average by dividing the sum of numbers by quantity of numbers
+    return sum(list) / len(list)</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.getAverageSpeedPerMonths"><code class="name flex">
+<span>def <span class="ident">getAverageSpeedPerMonths</span></span>(<span>city, data)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Calculates average speed per each month in a specified city.</p>
+                            <h2 id="args">Args</h2>
+                            <dl>
+                                <dt><strong><code>city</code></strong> :&ensp;<code>str</code></dt>
+                                <dd>City name.</dd>
+                                <dt><strong><a title="project.data" href="#project.data"><code>data</code></a></strong> :&ensp;<code>list</code> of <code>dict</code></dt>
+                                <dd>Data to be used.</dd>
+                            </dl>
+                            <h2 id="returns">Returns</h2>
+                            <dl>
+                                <dt><strong><code>dict</code></strong></dt>
+                                <dd>{ 'x': list: Months, 'y': list: Average speeds.</dd>
+                            </dl>
+                            <p>}</p>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def getAverageSpeedPerMonths(city, data):
+    &#34;&#34;&#34;Calculates average speed per each month in a specified city.
+
+    Args:
+        city (str): City name.
+        data (list of dict): Data to be used.
+
+    Returns:
+        dict: {
+            &#39;x&#39;: list: Months,
+            &#39;y&#39;: list: Average speeds.
+        }
+    &#34;&#34;&#34;
+    downloadSpeeds = []
+    dates = []
+    months = []
+    city = filterByCity(city, data)
+    somethings = {}
+    for dict in city:
+        tempList = []
+        month = getDateObject(dict[&#39;date&#39;]).month
+        if month in somethings:
+            somethings[month].append(float(dict[&#39;download&#39;]))
+        else:
+            tempList.append(float(dict[&#39;download&#39;]))
+            somethings[month] = tempList
+
+        downloadSpeeds.append(float(dict[&#39;download&#39;]))
+        dates.append(dict[&#39;date&#39;])
+
+    for item in dates:
+        months.append(getDateObject(item).month)
+
+    avgDict = {}
+    for k, v in somethings.items():
+        avgDict[int(k)] = getAverageFromList(v)
+
+    lists = sorted(avgDict.items())
+    x, y = zip(*lists)
+    return {&#39;x&#39;: x, &#39;y&#39;: y}</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.getDateObject"><code class="name flex">
+<span>def <span class="ident">getDateObject</span></span>(<span>stringDate)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Returns a date object from a string.</p>
+                            <h2 id="args">Args</h2>
+                            <dl>
+                                <dt><strong><code>stringDate</code></strong> :&ensp;<code>str</code></dt>
+                                <dd>Date in plain string.</dd>
+                            </dl>
+                            <h2 id="returns">Returns</h2>
+                            <dl>
+                                <dt><strong><code>datetime</code></strong></dt>
+                                <dd>Object with useful methods for working with date.</dd>
+                            </dl>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def getDateObject(stringDate):
+    &#34;&#34;&#34;Returns a date object from a string.
+
+    Args:
+        stringDate (str): Date in plain string.
+
+    Returns:
+        datetime: Object with useful methods for working with date.
+    &#34;&#34;&#34;
+    return dt.datetime.strptime(stringDate, &#39;%Y-%m-%d&#39;)</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.getPlotConfig"><code class="name flex">
+<span>def <span class="ident">getPlotConfig</span></span>(<span>label_x='x', label_y='y', ticks=10)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Sets desired plot config.</p>
+                            <h2 id="args">Args</h2>
+                            <dl>
+                                <dt><strong><code>label_x</code></strong> :&ensp;<code>str</code></dt>
+                                <dd>Name of an x label.</dd>
+                                <dt><strong><code>label_y</code></strong> :&ensp;<code>str</code></dt>
+                                <dd>Name of a y label.</dd>
+                                <dt><strong><code>ticks</code></strong> :&ensp;<code>int</code></dt>
+                                <dd>Number of ticks.</dd>
+                            </dl>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def getPlotConfig(label_x=&#34;x&#34;, label_y=&#34;y&#34;, ticks=10):
+    &#34;&#34;&#34;Sets desired plot config.
+
+    Args:
+        label_x (str): Name of an x label.
+        label_y (str): Name of a y label.
+        ticks (int): Number of ticks.
+    &#34;&#34;&#34;
+    plt.tight_layout()
+    plt.xlabel(label_x)
+    plt.ylabel(label_y)
+    plt.xticks(ticks)
+    plt.legend(loc=&#39;best&#39;)
+    plt.show()</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.getPlotTheme"><code class="name flex">
+<span>def <span class="ident">getPlotTheme</span></span>(<span>)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Returns a correct plot style accrording to the state of dark mode.</p>
+                            <h2 id="returns">Returns</h2>
+                            <dl>
+                                <dt><strong><code>str</code></strong></dt>
+                                <dd>Plot style.</dd>
+                            </dl>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def getPlotTheme():
+    &#34;&#34;&#34;Returns a correct plot style accrording to the state of dark mode.
+
+    Returns:
+        str: Plot style.
+    &#34;&#34;&#34;
+    global darkMode
+    if darkMode:
+        return &#39;dark_background&#39;
+    else:
+        return &#39;ggplot&#39;</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.getSpeedsPerMonth"><code class="name flex">
+<span>def <span class="ident">getSpeedsPerMonth</span></span>(<span>selected_month, data)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Returns all the speeds for a selected month.</p>
+                            <h2 id="args">Args</h2>
+                            <dl>
+                                <dt><strong><code>selected_month</code></strong> :&ensp;<code>str</code></dt>
+                                <dd>Full month name.</dd>
+                                <dt><strong><a title="project.data" href="#project.data"><code>data</code></a></strong> :&ensp;<code>list</code> of <code>dict</code></dt>
+                                <dd>Data to be used.</dd>
+                            </dl>
+                            <h2 id="returns">Returns</h2>
+                            <dl>
+                                <dt><strong><code>list</code></strong></dt>
+                                <dd>List of all speeds.</dd>
+                            </dl>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def getSpeedsPerMonth(selected_month, data):
+    &#34;&#34;&#34;Returns all the speeds for a selected month.
+
+    Args:
+        selected_month (str): Full month name.
+        data (list of dict): Data to be used.
+
+    Returns:
+        list: List of all speeds.
+    &#34;&#34;&#34;
+    speeds = []
+
+    # parses a month name into a month number
+    month_number = str(dt.datetime.strptime(selected_month, &#39;%B&#39;).month)
+    for dict in data:
+        # formats a date string into a month number
+        temp_month = getDateObject(dict[&#39;date&#39;]).strftime(&#34;%m&#34;).lstrip(&#39;0&#39;)
+        if month_number == temp_month:
+            speeds.append(float(dict[&#39;download&#39;]))
+
+    return speeds</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.parseData"><code class="name flex">
+<span>def <span class="ident">parseData</span></span>(<span>)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Uses Parser class to parse data into a global variable.</p>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def parseData():
+    &#34;&#34;&#34;Uses Parser class to parse data into a global variable.&#34;&#34;&#34;
+    global data
+    data = parser.getData(separator=&#39;,&#39;)
+    input(&#34;Click ENTER to continue...&#34;)</code></pre>
+                        </details>
+                    </dd>
+                    <dt id="project.toggleDarkMode"><code class="name flex">
+<span>def <span class="ident">toggleDarkMode</span></span>(<span>)</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>Toggles a dark mode state.</p>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">def toggleDarkMode():
+    &#34;&#34;&#34;Toggles a dark mode state.&#34;&#34;&#34;
+    global darkMode
+    darkMode ^= True
+    print(&#34;Dark mode is:&#34;, end=&#34; &#34;)
+    if darkMode:
+        print(colored(&#34;ON&#34;, &#34;green&#34;))
+        print(&#34;Open a graph to see the results.&#34;)
+    else:
+        print(colored(&#34;OFF&#34;, &#34;red&#34;))
+    input(&#34;Click ENTER to continue...&#34;)</code></pre>
+                        </details>
+                    </dd>
+                </dl>
+            </section>
+            <section>
+                <h2 class="section-title" id="header-classes">Classes</h2>
+                <dl>
+                    <dt id="project.Parser"><code class="flex name class">
+<span>class <span class="ident">Parser</span></span>
+<span>(</span><span>encoding='utf8')</span>
+</code></dt>
+                    <dd>
+                        <section class="desc">
+                            <p>This is a class for parsing and retrieving CSV data.</p>
+                            <h2 id="args">Args</h2>
+                            <dl>
+                                <dt><strong><code>encoding</code></strong> :&ensp;<code>str</code>, optional</dt>
+                                <dd>Specify which encoding should be used in reading the file.</dd>
+                            </dl>
+                        </section>
+                        <details class="source">
+                            <summary>
+                                <span>Expand source code</span>
+                            </summary>
+                            <pre><code class="python">class Parser:
+    &#34;&#34;&#34;This is a class for parsing and retrieving CSV data.&#34;&#34;&#34;
+
+    def __init__(self, encoding=&#39;utf8&#39;):
+        &#34;&#34;&#34;
+        Args:
+            encoding (str, optional): Specify which encoding should be used in
+                reading the file.
+        &#34;&#34;&#34;
+        self.encoding = encoding
+
+    def get_path(self):
+        &#34;&#34;&#34;Method that asks a user for a path and returns it.
+
+        Provides simple validation if file doesn&#39;t exists or user has put in a 
+        file that is not a csv.
+
+        Returns:
+            String if successful, None otherwise.
+        &#34;&#34;&#34;
+        path_csv = input(&#39;Enter path to your csv file: &#39;)
+        if path.exists(path_csv):
+            extension = path.splitext(path_csv)[1]
+            if extension == &#39;.csv&#39;:
+                return path_csv
+            else:
+                print(colored(&#39;File is not a csv&#39;, &#39;red&#39;))
+                return None
+        else:
+            print(colored(&#39;File doesn\&#39;t exist&#39;, &#39;red&#39;))
+            return None
+
+    def getData(self, separator):
+        &#34;&#34;&#34;Method for reading csv contents and parsing it into a list of
+            dictionaries.
+
+        Uses the csv module. Method can handle data with x amount of columns
+        and will automatically assign correct headers.
+
+        Args:
+            separator (str): Defines how are values separated in a csv file.
+
+        Returns:
+            List of ditionaries if successful, None otherwise.
+        &#34;&#34;&#34;
+        path_csv = self.get_path()
+        if path_csv is None:
+            return
+
+        # start counting time elapsed
+        t = process_time()
+
+        data = []
+
+        with open(path_csv, encoding=self.encoding) as file:
+
+            reader = csv.reader(file, delimiter=separator)
+
+            # get headers from the first line
+            headers = next(reader)
+
+            # loop over remaining lines and put them into list of dictionaries
+            for line in reader:
+                # continue parsing only if the data is correct
+                # (same number of items as headers)
+                if len(line) == len(headers):
+                    values = []
+                    for i in range(len(headers)):
+                        values.append(line[i])
+                    # connecting values with headers and creating a dictionary
+                    data.append(dict(zip(headers, values)))
+
+        # getting result of time elapsed
+        time_elapsed = round(process_time() - t, 5)
+
+        print(colored(&#39;CSV successfully parsed with csv module&#39;, &#39;green&#39;))
+        print(colored(f&#39;Time to read and parse: {time_elapsed}s&#39;, &#39;white&#39;))
+
+        return data</code></pre>
+                        </details>
+                        <h3>Methods</h3>
+                        <dl>
+                            <dt id="project.Parser.getData"><code class="name flex">
+<span>def <span class="ident">getData</span></span>(<span>self, separator)</span>
+</code></dt>
+                            <dd>
+                                <section class="desc">
+                                    <p>Method for reading csv contents and parsing it into a list of dictionaries.
+                                    </p>
+                                    <p>Uses the csv module. Method can handle data with x amount of columns and will automatically assign correct headers.</p>
+                                    <h2 id="args">Args</h2>
+                                    <dl>
+                                        <dt><strong><code>separator</code></strong> :&ensp;<code>str</code></dt>
+                                        <dd>Defines how are values separated in a csv file.</dd>
+                                    </dl>
+                                    <h2 id="returns">Returns</h2>
+                                    <p>List of ditionaries if successful, None otherwise.</p>
+                                </section>
+                                <details class="source">
+                                    <summary>
+                                        <span>Expand source code</span>
+                                    </summary>
+                                    <pre><code class="python">def getData(self, separator):
+    &#34;&#34;&#34;Method for reading csv contents and parsing it into a list of
+        dictionaries.
+
+    Uses the csv module. Method can handle data with x amount of columns
+    and will automatically assign correct headers.
+
+    Args:
+        separator (str): Defines how are values separated in a csv file.
+
+    Returns:
+        List of ditionaries if successful, None otherwise.
+    &#34;&#34;&#34;
+    path_csv = self.get_path()
+    if path_csv is None:
+        return
+
+    # start counting time elapsed
+    t = process_time()
+
+    data = []
+
+    with open(path_csv, encoding=self.encoding) as file:
+
+        reader = csv.reader(file, delimiter=separator)
+
+        # get headers from the first line
+        headers = next(reader)
+
+        # loop over remaining lines and put them into list of dictionaries
+        for line in reader:
+            # continue parsing only if the data is correct
+            # (same number of items as headers)
+            if len(line) == len(headers):
+                values = []
+                for i in range(len(headers)):
+                    values.append(line[i])
+                # connecting values with headers and creating a dictionary
+                data.append(dict(zip(headers, values)))
+
+    # getting result of time elapsed
+    time_elapsed = round(process_time() - t, 5)
+
+    print(colored(&#39;CSV successfully parsed with csv module&#39;, &#39;green&#39;))
+    print(colored(f&#39;Time to read and parse: {time_elapsed}s&#39;, &#39;white&#39;))
+
+    return data</code></pre>
+                                </details>
+                            </dd>
+                            <dt id="project.Parser.get_path"><code class="name flex">
+<span>def <span class="ident">get_path</span></span>(<span>self)</span>
+</code></dt>
+                            <dd>
+                                <section class="desc">
+                                    <p>Method that asks a user for a path and returns it.</p>
+                                    <p>Provides simple validation if file doesn't exists or user has put in a file that is not a csv.</p>
+                                    <h2 id="returns">Returns</h2>
+                                    <p>String if successful, None otherwise.</p>
+                                </section>
+                                <details class="source">
+                                    <summary>
+                                        <span>Expand source code</span>
+                                    </summary>
+                                    <pre><code class="python">def get_path(self):
+    &#34;&#34;&#34;Method that asks a user for a path and returns it.
+
+    Provides simple validation if file doesn&#39;t exists or user has put in a 
+    file that is not a csv.
+
+    Returns:
+        String if successful, None otherwise.
+    &#34;&#34;&#34;
+    path_csv = input(&#39;Enter path to your csv file: &#39;)
+    if path.exists(path_csv):
+        extension = path.splitext(path_csv)[1]
+        if extension == &#39;.csv&#39;:
+            return path_csv
+        else:
+            print(colored(&#39;File is not a csv&#39;, &#39;red&#39;))
+            return None
+    else:
+        print(colored(&#39;File doesn\&#39;t exist&#39;, &#39;red&#39;))
+        return None</code></pre>
+                                </details>
+                            </dd>
+                        </dl>
+                    </dd>
+                </dl>
+            </section>
+        </article>
+        <nav id="sidebar">
+            <h1>Index</h1>
+            <div class="toc">
+                <ul></ul>
+            </div>
+            <ul id="index">
+                <li>
+                    <h3><a href="#header-variables">Global variables</a></h3>
+                    <ul class="">
+                        <li><code><a title="project.choice" href="#project.choice">choice</a></code></li>
+                        <li><code><a title="project.darkMode" href="#project.darkMode">darkMode</a></code></li>
+                        <li><code><a title="project.data" href="#project.data">data</a></code></li>
+                        <li><code><a title="project.parser" href="#project.parser">parser</a></code></li>
+                    </ul>
+                </li>
+                <li>
+                    <h3><a href="#header-functions">Functions</a></h3>
+                    <ul class="">
+                        <li><code><a title="project.askUser" href="#project.askUser">askUser</a></code></li>
+                        <li><code><a title="project.check_data" href="#project.check_data">check_data</a></code></li>
+                        <li><code><a title="project.filterByCity" href="#project.filterByCity">filterByCity</a></code></li>
+                        <li><code><a title="project.getAverageFromList" href="#project.getAverageFromList">getAverageFromList</a></code></li>
+                        <li><code><a title="project.getAverageSpeedPerMonths" href="#project.getAverageSpeedPerMonths">getAverageSpeedPerMonths</a></code></li>
+                        <li><code><a title="project.getDateObject" href="#project.getDateObject">getDateObject</a></code></li>
+                        <li><code><a title="project.getPlotConfig" href="#project.getPlotConfig">getPlotConfig</a></code></li>
+                        <li><code><a title="project.getPlotTheme" href="#project.getPlotTheme">getPlotTheme</a></code></li>
+                        <li><code><a title="project.getSpeedsPerMonth" href="#project.getSpeedsPerMonth">getSpeedsPerMonth</a></code></li>
+                        <li><code><a title="project.parseData" href="#project.parseData">parseData</a></code></li>
+                        <li><code><a title="project.toggleDarkMode" href="#project.toggleDarkMode">toggleDarkMode</a></code></li>
+                    </ul>
+                </li>
+                <li>
+                    <h3><a href="#header-classes">Classes</a></h3>
+                    <ul>
+                        <li>
+                            <h4><code><a title="project.Parser" href="#project.Parser">Parser</a></code></h4>
+                            <ul class="">
+                                <li><code><a title="project.Parser.getData" href="#project.Parser.getData">getData</a></code></li>
+                                <li><code><a title="project.Parser.get_path" href="#project.Parser.get_path">get_path</a></code></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </main>
+    <footer id="footer">
+        <p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+</body>
+
+</html>
