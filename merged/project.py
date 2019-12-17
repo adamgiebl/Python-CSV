@@ -1,18 +1,17 @@
-import matplotlib.pyplot as plt
-from termcolor import colored
-from os import path
-import datetime as dt
-from time import process_time
-import csv
-import colorama
-from pprint import pprint as pp
-
+import matplotlib.pyplot as plt  # plotting data
+from termcolor import colored  # print colored messages in the terminal
+import colorama  # makes termcolor work on windows
+from os import path  # working with file path
+import datetime as dt  # parsing and formatting date
+from time import process_time  # measuring execution time of code
+import csv  # reading csv files
+from pprint import pprint as pp  # prettyfied printing
 
 
 class Parser:
     """This is a class for parsing and retrieving CSV data."""
 
-    def __init__(self, encoding='utf8'):
+    def __init__(self, encoding="utf8"):
         """
         Args:
             encoding (str, optional): Specify which encoding should be used in
@@ -20,25 +19,27 @@ class Parser:
         """
         self.encoding = encoding
 
-    def get_path():
+    def get_path(self):
         """Method that asks a user for a path and returns it.
 
-        Provides simple validation if file doesn't exists or user has put in a 
+        Provides simple validation if file doesn't exists or user has put in a
         file that is not a csv.
 
         Returns:
             String if successful, None otherwise.
         """
-        path_csv = input('Enter path to your csv file: ')
+        path_csv = input("Enter path to your csv file: ")
         if path.exists(path_csv):
+            # splits path into file name and file extension
+            # with [1] we get only the extension
             extension = path.splitext(path_csv)[1]
-            if extension == '.csv':
+            if extension == ".csv":
                 return path_csv
             else:
-                print(colored('File is not a csv', 'red'))
+                print(colored("File is not a csv", "red"))
                 return None
         else:
-            print(colored('File doesn\'t exist', 'red'))
+            print(colored("File doesn't exist", "red"))
             return None
 
     def get_data(self, separator):
@@ -62,14 +63,15 @@ class Parser:
         t = process_time()
 
         data = []
-
+        # opens a file in read mode and reads it with the correct encoding
         with open(path_csv, encoding=self.encoding) as file:
 
+            # gets all of the lines in the file
             reader = csv.reader(file, delimiter=separator)
 
             # get headers from the first line
+            # skips the first line and saves it in a list
             headers = next(reader)
-
             # loop over remaining lines and put them into list of dictionaries
             for line in reader:
                 # continue parsing only if the data is correct
@@ -81,25 +83,32 @@ class Parser:
                     # connecting values with headers and creating a dictionary
                     data.append(dict(zip(headers, values)))
 
+        if not data:
+            print(colored("There was no data parsed, try again.", "red"))
+            return
+
         # getting result of time elapsed
         time_elapsed = round(process_time() - t, 5)
 
-        print(colored('CSV successfully parsed with csv module', 'green'))
-        print(colored(f'Time to read and parse: {time_elapsed}s', 'white'))
+        print(colored("CSV successfully parsed with csv module", "green"))
+        print(colored(f"Time to read and parse: {time_elapsed}s", "white"))
 
         return data
 
 
 def check_data(func):
-    """Decorator function to check if the data exists before user tries to use functions that require it."""
+    """Decorator function to check if the data exists before user tries to use
+    functions that require it."""
+
     def inner(*args, **kwargs):
         # checking if first argument (data) is empty
         if args[0]:
             func(*args, **kwargs)
         else:
-            print(colored("There is not data to work with.", 'red'))
+            print(colored("There is not data to work with.", "red"))
             print("Try parsing the file first.")
             input("Click ENTER to continue...")
+
     return inner
 
 
@@ -114,7 +123,7 @@ def filter_by_city(city, data):
         list: List of ditionaries.
     """
     # filter that compares location using a lambda operator
-    return list(filter(lambda x: x['location'] == city, data))
+    return list(filter(lambda x: x["location"] == city, data))
 
 
 def get_date_object(string_date):
@@ -126,7 +135,7 @@ def get_date_object(string_date):
     Returns:
         datetime: Object with useful methods for working with date.
     """
-    return dt.datetime.strptime(string_date, '%Y-%m-%d')
+    return dt.datetime.strptime(string_date, "%Y-%m-%d")
 
 
 def get_average_from_list(list):
@@ -138,7 +147,7 @@ def get_average_from_list(list):
     Returns:
         int: Average of a list.
     """
-    # calculate the average by dividing the sum of numbers by the quantity of numbers
+    # calculate the average
     return sum(list) / len(list)
 
 
@@ -151,7 +160,7 @@ def ask_user(path):
     Returns:
         String if input is text, Int if input is a number.
     """
-    file = open(path, encoding='utf8')
+    file = open(path, encoding="utf8")
     txt = file.read()
     print(txt)
     res = input()
@@ -178,11 +187,11 @@ def get_average_speed_per_months(city, data):
     months_dict = {}
     for dict in city:
         temp_list = []
-        month = get_date_object(dict['date']).month
+        month = get_date_object(dict["date"]).month
         if month in months_dict:
-            months_dict[month].append(float(dict['download']))
+            months_dict[month].append(float(dict["download"]))
         else:
-            temp_list.append(float(dict['download']))
+            temp_list.append(float(dict["download"]))
             months_dict[month] = temp_list
 
     avg_dict = {}
@@ -190,16 +199,15 @@ def get_average_speed_per_months(city, data):
         avg_dict[int(k)] = get_average_from_list(v)
 
     items = avg_dict.items()
-    pp(items)
     tuples = sorted(items)
-    pp(tuples)
-    # asterisk takes the tuples out of the list and spreads them out (positional expansion)
+    # asterisk takes tuples out of a list and spreads them out
+    # (positional expansion)
     # e.g. [1,2,3,4] > 1, 2, 3, 4
     # zip pairs items from lists together
     # e.g. [1, 2, 3], ["a", "b", "c"] > [[1, "a"], [2, "b"], [3, "c"]]
     x, y = zip(*tuples)
 
-    return {'x': x, 'y': y}
+    return {"x": x, "y": y}
 
 
 def get_speeds_per_month(selected_month, data):
@@ -215,12 +223,12 @@ def get_speeds_per_month(selected_month, data):
     speeds = []
 
     # parses a month name into a month number
-    month_number = str(dt.datetime.strptime(selected_month, '%B').month)
+    month_number = str(dt.datetime.strptime(selected_month, "%B").month)
     for dict in data:
         # formats a date string into a month number
-        temp_month = get_date_object(dict['date']).strftime("%m").lstrip('0')
+        temp_month = get_date_object(dict["date"]).strftime("%m").lstrip("0")
         if month_number == temp_month:
-            speeds.append(float(dict['download']))
+            speeds.append(float(dict["download"]))
 
     return speeds
 
@@ -237,7 +245,7 @@ def get_plot_config(label_x="x", label_y="y", ticks=10):
     plt.xlabel(label_x)
     plt.ylabel(label_y)
     plt.xticks(ticks)
-    plt.legend(loc='best')
+    plt.legend(loc="best")
     plt.show()
 
 
@@ -249,15 +257,16 @@ def get_plot_theme():
     """
     global dark_mode
     if dark_mode:
-        return 'dark_background'
+        return "dark_background"
     else:
-        return 'ggplot'
+        return "ggplot"
 
 
 def parse_data():
     """Uses Parser class to parse data into a global variable."""
+    # use variable data from the global scope
     global data
-    data = parser.get_data(separator=',')
+    data = parser.get_data(separator=",")
     input("Click ENTER to continue...")
 
 
@@ -277,13 +286,13 @@ def toggle_dark_mode():
 """Makes colored terminal output work on Windows"""
 colorama.init()
 
-parser = Parser('utf8')
+parser = Parser("utf8")
 """Parser: Instance of the Parser class."""
 
 data = []
 """List: Used as a container for the parsed data."""
 
-choice = ask_user('menu.txt')
+choice = ask_user("menu.txt")
 """String: Getting and storing users input."""
 
 dark_mode = False
@@ -292,63 +301,60 @@ dark_mode = False
 
 @check_data
 def function2(data):
-    first_month = 'August'
-    second_month = 'September'
-    city = 'Fanø'
-    t = process_time()
+    first_month = "August"
+    second_month = "September"
+    city = "Fanø"
     city_data = filter_by_city(city, data)
     august_speeds = get_speeds_per_month(first_month, city_data)
     september_speeds = get_speeds_per_month(second_month, city_data)
-    time_elapsed = round(process_time() - t, 5)
-    print(time_elapsed)
-    print(f'Average download speed for {first_month} and {second_month} in {city} is:')
-    print(colored(get_average_from_list(august_speeds + september_speeds), 'green'))
+    print(
+        f"Average download speed for {first_month} and {second_month} in {city} is:")
+    print(colored(get_average_from_list(august_speeds + september_speeds), "green"))
     input("Click ENTER to continue...")
 
 
 @check_data
 def function3(data):
-    average_speed_ballerup = get_average_speed_per_months('Ballerup', data)
-    average_speed_copenhagen = get_average_speed_per_months('Copenhagen', data)
+    average_speed_ballerup = get_average_speed_per_months("Ballerup", data)
+    average_speed_copenhagen = get_average_speed_per_months("Copenhagen", data)
+    # plots the data with a correct theme
     with plt.style.context(get_plot_theme()):
         plt.plot(
-            average_speed_ballerup['x'],
-            average_speed_ballerup['y'],
-            'red',
-            label="Bellerup"
+            average_speed_ballerup["x"],
+            average_speed_ballerup["y"],
+            "red",
+            label="Ballerup",
         )
         plt.plot(
-            average_speed_copenhagen['x'],
-            average_speed_copenhagen['y'],
-            'blue',
-            label="Copenhagen"
+            average_speed_copenhagen["x"],
+            average_speed_copenhagen["y"],
+            "blue",
+            label="Copenhagen",
         )
         get_plot_config(
             label_x="Month",
             label_y="Avg. Download speed",
-            ticks=range(len(list(average_speed_ballerup['x']))+1)
+            # getting the number of months from dictionary
+            ticks=average_speed_ballerup["x"],
         )
 
 
 @check_data
 def function4(data):
-    city = 'Lolland'
+    city = "Lolland"
     average_speed = get_average_speed_per_months(city, data)
+    # plots the data with a correct theme
     with plt.style.context(get_plot_theme()):
-        plt.bar(
-            average_speed['x'],
-            average_speed['y'],
-            label=city
-        )
+        plt.bar(average_speed["x"], average_speed["y"], label=city)
         get_plot_config(
             label_x="Month",
             label_y="Avg. Download speed",
-            ticks=range(len(list(average_speed['x']))+1)
+            ticks=average_speed["x"]
         )
 
 
 # selecting a function based on a users choice
-while choice != 'q':
+while choice != "q":
     if choice == 1:
         parse_data()
     elif choice == 2:
@@ -359,4 +365,4 @@ while choice != 'q':
         function4(data)
     elif choice == 5:
         toggle_dark_mode()
-    choice = ask_user('menu.txt')
+    choice = ask_user("menu.txt")
