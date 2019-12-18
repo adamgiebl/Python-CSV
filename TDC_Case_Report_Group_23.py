@@ -5,12 +5,17 @@ from os import path  # working with file path
 import datetime as dt  # parsing and formatting date
 from time import process_time  # measuring execution time of code
 import csv  # reading csv files
-from pprint import pprint as pp  # prettyfied printing
+from pprint import pprint as pp  # prettyfied printing, easier debugging
+
+# ------------------------------------------------------
+# To find program exectuion, go to the end of this file.
+# ------------------------------------------------------
 
 
 class Parser:
     """This is a class for parsing and retrieving CSV data."""
 
+    # default utf8 encoding to be able to read special characters like Ø
     def __init__(self, encoding="utf8"):
         """
         Args:
@@ -40,6 +45,21 @@ class Parser:
                 return None
         else:
             print(colored("File doesn't exist", "red"))
+            print(
+                colored(
+                    """If you don't know how to write a path, try putting the
+                    file in the same directory as your program""",
+                    "red",
+                )
+            )
+            print(
+                colored(
+                    """Path has to come from the directory you ran the program
+                    in, which is not necessarily a directory of the python
+                    program.""",
+                    "red",
+                )
+            )
             return None
 
     def get_data(self, separator):
@@ -105,7 +125,7 @@ def check_data(func):
         if args[0]:
             func(*args, **kwargs)
         else:
-            print(colored("There is not data to work with.", "red"))
+            print(colored("There is no data to work with.", "red"))
             print("Try parsing the file first.")
             input("Click ENTER to continue...")
 
@@ -151,18 +171,16 @@ def get_average_from_list(list):
     return sum(list) / len(list)
 
 
-def ask_user(path):
+def ask_user(menu):
     """Prints out a menu and asks for users input accordingly.
 
     Args:
-        path (str): Path to the text file that defines the menu.
+        menu (str): Text that defines the menu.
 
     Returns:
         String if input is text, Int if input is a number.
     """
-    file = open(path, encoding="utf8")
-    txt = file.read()
-    print(txt)
+    print(menu)
     res = input()
     if res.isdigit():
         return int(res)
@@ -179,8 +197,8 @@ def get_average_speed_per_months(city, data):
 
     Returns:
         dict: {
-            'x': list: Months,
-            'y': list: Average speeds.
+            'x': (list): Months,
+            'y': (list): Average speeds.
             }
     """
     city = filter_by_city(city, data)
@@ -283,8 +301,20 @@ def toggle_dark_mode():
     input("Click ENTER to continue...")
 
 
-"""Makes colored terminal output work on Windows"""
+menu = """
+| —MENU—
+| Enter a number to select the function you want to perform:
+| 1. Parse the CSV file.
+| 2. Print average download speed for Fanø in August and September.
+| 3. Plot monthly average download speed for Copenhagen and Ballerup.
+| 4. Create a bar plot of the upload speed per date for Lolland Commune
+| 5. Toggle dark mode
+| Press Q to quit
+"""
+
+
 colorama.init()
+"""Makes colored terminal output work on Windows"""
 
 parser = Parser("utf8")
 """Parser: Instance of the Parser class."""
@@ -292,7 +322,7 @@ parser = Parser("utf8")
 data = []
 """List: Used as a container for the parsed data."""
 
-choice = ask_user("menu.txt")
+choice = ask_user(menu)
 """String: Getting and storing users input."""
 
 dark_mode = False
@@ -308,8 +338,13 @@ def function2(data):
     august_speeds = get_speeds_per_month(first_month, city_data)
     september_speeds = get_speeds_per_month(second_month, city_data)
     print(
-        f"Average download speed for {first_month} and {second_month} in {city} is:")
-    print(colored(get_average_from_list(august_speeds + september_speeds), "green"))
+        f"Average download speed for {first_month} and {second_month} in {city} is:"
+    )
+    print(
+        colored(
+            get_average_from_list(august_speeds + september_speeds), "green"
+        )
+    )
     input("Click ENTER to continue...")
 
 
@@ -349,7 +384,7 @@ def function4(data):
         get_plot_config(
             label_x="Month",
             label_y="Avg. Download speed",
-            ticks=average_speed["x"]
+            ticks=average_speed["x"],
         )
 
 
@@ -365,4 +400,4 @@ while choice != "q":
         function4(data)
     elif choice == 5:
         toggle_dark_mode()
-    choice = ask_user("menu.txt")
+    choice = ask_user(menu)
